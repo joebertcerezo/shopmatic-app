@@ -23,3 +23,30 @@
  - User can click the 'Clear Entry' button to clear the last selected item from the receipt panel. This has the effect of unselecting that item.
  - User can click the 'Cancel All' button to clear all purchases made before checking out.
  - User can see an input field in the input panel the user may enter the name of the customer into when a purchase is made. The customer name will be added to all items purchased by that customer in the receipt panel and in the rows added to the database.
+
+
+
+
+## Vue Project Setup
+
+```sh
+npm install
+```
+
+### Compile and Hot-Reload for Development
+
+```sh
+npm run dev
+```
+
+### Type-Check, Compile and Minify for Production
+
+```sh
+npm run build
+```
+
+### Lint with [ESLint](https://eslint.org/)
+
+```sh
+npm run lint
+```
