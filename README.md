@@ -1,5 +1,6 @@
 # Shopmatic App - A Full Stack Project
 - This project is developed with Scala and Vue with PostgreSQL as the database.
+- Use EitherT, OptionT, Cats
 
 ## Credits and Reference
 - App idea is credited to: https://github.com/florinpop17/app-ideas/blob/master/Projects/2-Intermediate/Sales-DB-App.md
