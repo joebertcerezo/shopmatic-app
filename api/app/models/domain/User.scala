@@ -11,10 +11,6 @@ case class User (
   id: UUID = UUID.randomUUID()
 )
 
-object User {
-  given Writes[User] = Json.writes[User]
-}
-
 case class UserCreate (
   email: String,
   name: String,
