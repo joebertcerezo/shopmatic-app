@@ -4,7 +4,7 @@ import java.util.UUID
 import play.api.libs.json._
 
 case class Business (
-  idOwner: UUID,
+  owner: String,
   name: String,
   id: UUID = UUID.randomUUID()
 )
@@ -14,14 +14,14 @@ object Business {
 }
 
 case class BusinessCreate (
-  idOwner: UUID,
+  owner: String,
   name: String
 ) {
-  def toDomain() = Business(idOwner, name)
+  def toDomain() = Business(owner, name)
 }
 
 object BusinessCreate {
   def unapply(b: BusinessCreate):
-    Option[(UUID, String)] =
-      Some((b.idOwner, b.name))
+    Option[(String, String)] =
+      Some((b.owner, b.name))
 }

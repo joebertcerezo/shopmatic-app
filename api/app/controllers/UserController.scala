@@ -33,7 +33,7 @@ class UserController @Inject()
       error => Future.successful(BadRequest(error.errorsAsJson)),
       data => userService.auth(data).value.map {
         case Left(msg) => Unauthorized(toMessage(msg))
-        case Right((id, name)) => Ok(Json.obj("id" -> id, "name" -> name))
+        case Right((email, name)) => Ok(Json.obj("email" -> email, "name" -> name))
           .withSession("email" -> data.email)
       }
     ).recover{ _ => InternalServerError(toMessage("Server Error.")) }

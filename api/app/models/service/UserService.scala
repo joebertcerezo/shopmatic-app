@@ -18,17 +18,17 @@ class UserService @Inject()
     If username exists, don't add.
     Otherwise, proceed adding the user.
   */
-  def add(user: UserCreate): EitherT[Future, String, String] = for {
+  def add(user: User): EitherT[Future, String, String] = for {
       _ <- OptionT(userRepo.show(user.email)).toLeft(()).leftMap(_ => "Email already registered.")
-      result <- EitherT.liftF(userRepo.add(user.toDomain())).map(_ => "Registered successfully.")
+      result <- EitherT.liftF(userRepo.add(user)).map(_ => "Registered successfully.")
     } yield result
 
   /*
     If credentials match, authenticate user.
     Otherwise, send an unauthorized message.
   */
-  def auth(user: UserCredential): EitherT[Future, String, (UUID,String)] = for {
+  def auth(user: UserCredential): EitherT[Future, String, (String,String)] = for {
       u <- OptionT(userRepo.find(user.email, user.password)).toRight("Invalid Credentials.")
-      result <- EitherT.liftF(Future((u.id, u.name)))
+      result <- EitherT.liftF(Future((u.email, u.name)))
     } yield result
 }

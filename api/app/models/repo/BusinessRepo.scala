@@ -18,9 +18,9 @@ class BusinessRepo @Inject()
 
   final class BusinessTable(t: Tag) extends Table[Business](t, "BUSINESS") {
     def id = column[UUID]("ID", O.PrimaryKey)
-    def idOwner = column[UUID]("ID_OWNER")
+    def owner = column[String]("OWNER")
     def name = column[String]("NAME", O.Length(255))
-    def * = (idOwner, name, id).mapTo[Business]
+    def * = (owner, name, id).mapTo[Business]
   }
 
   lazy val businesses = TableQuery[BusinessTable]
@@ -29,13 +29,13 @@ class BusinessRepo @Inject()
       businesses returning businesses += business
     }
 
-  def get(idOwner: UUID): Future[Seq[Business]] = db.run {
-      businesses.filter(_.idOwner === idOwner).result
+  def get(email: String): Future[Seq[Business]] = db.run {
+      businesses.filter(_.owner === email).result
     }
 
-  def find(idOwner: UUID, name: String): Future[Option[Business]] = db.run {
+  def find(email: String, name: String): Future[Option[Business]] = db.run {
       businesses
-        .filter(b => b.idOwner === idOwner && b.name === name)
+        .filter(b => b.owner === email && b.name === name)
         .result
         .headOption
     }
