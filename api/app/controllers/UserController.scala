@@ -13,7 +13,8 @@ import scala.concurrent.{ Future, ExecutionContext }
 class UserController @Inject()
 (
   val controllerComponents: ControllerComponents,
-  userService: UserService
+  userService: UserService,
+  val secureAction: SecureAction
 ) (using ExecutionContext) extends BaseController with I18nSupport {
 
   import forms.UserForms._
