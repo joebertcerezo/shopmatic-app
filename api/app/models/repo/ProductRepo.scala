@@ -48,10 +48,8 @@ class ProductRepo @Inject()(
     products.filter(_.id === id).result.headOption
   }
 
-  def create(product: Product): Future[Product] = db.run {
-    (products returning products.map(_.id) into (
-      (product, id) => product.copy(id = id)
-    )) += product
+  def add(product: Product, id: UUID): Future[Product] = db.run {
+    products returning products += product.copy(idBusiness = id)
   }
 
   def update(id: UUID, product: Product): Future[Int] = db.run {

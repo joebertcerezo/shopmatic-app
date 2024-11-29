@@ -28,3 +28,9 @@ case class ProductCreate(
 ) {
   def toDomain() = Product(UUID.randomUUID(), idBusiness, name, description, price, stock, isHidden)
 }
+
+object ProductCreate {
+  def unapply(p: ProductCreate):
+    Option[(UUID, String, String, BigDecimal, Long, Boolean)] =
+      Some((p.idBusiness, p.name, p.description, p.price, p.stock, p.isHidden))
+}

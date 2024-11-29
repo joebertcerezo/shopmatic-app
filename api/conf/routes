@@ -1,6 +1,6 @@
 GET     /                           controllers.HomeController.index()
 
-POST    /users?sso=:sso             controllers.UserController.register(sso: Boolean)
+POST    /users/:sso             controllers.UserController.register(sso: Boolean)
 POST    /users/sessions?sso=:sso    controllers.UserController.login(sso: Boolean)
 DELETE  /users/sessions             controllers.UserController.logout()
 
