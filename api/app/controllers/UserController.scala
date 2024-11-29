@@ -19,7 +19,7 @@ class UserController @Inject()
 
   import forms.UserForms._
 
-  def register() = Action.async { implicit request =>
+  def register(sso: Boolean) = Action.async { implicit request =>
     registrationForm.bindFromRequest().fold (
       error => Future.successful(BadRequest(error.errorsAsJson)),
       data => userService.add(data).value.map {
@@ -29,7 +29,7 @@ class UserController @Inject()
     )
   }
 
-  def login() = Action.async { implicit request =>
+  def login(sso: Boolean) = Action.async { implicit request =>
     loginForm.bindFromRequest().fold (
       error => Future.successful(BadRequest(error.errorsAsJson)),
       data => userService.auth(data).value.map {
