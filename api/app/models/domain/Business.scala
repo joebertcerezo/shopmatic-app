@@ -11,6 +11,7 @@ case class Business (
 
 object Business {
   given Writes[Business] = Json.writes[Business]
+  given Reads[Business] = Json.reads[Business]
 }
 
 case class BusinessCreate (
@@ -24,4 +25,7 @@ object BusinessCreate {
   def unapply(b: BusinessCreate):
     Option[(UUID, String)] =
       Some((b.owner, b.name))
+
+  given Writes[BusinessCreate] = Json.writes[BusinessCreate]
+  given Reads[BusinessCreate] = Json.reads[BusinessCreate]
 }

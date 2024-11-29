@@ -14,7 +14,7 @@ import cats.data.{ OptionT, EitherT }
 import cats.implicits._
 
 @Singleton
-class UserService @Inject()
+class BusinessService @Inject()
 (userRepo: UserRepo, businessRepo: BusinessRepo)
 (using ExecutionContext) {
   /*

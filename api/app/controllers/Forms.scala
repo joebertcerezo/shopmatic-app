@@ -21,10 +21,10 @@ object UserForms {
   )(UserCredential.apply)(UserCredential.unapply))
 }
 
-object BusinessForms {
+object BusinessForm {
   import domain.business.{BusinessCreate}
 
-  val businessForm: Form[BusinessCreate] = Form(mapping(
+  val businessCreate: Form[BusinessCreate] = Form(mapping(
     "owner" -> uuid,
     "name" -> nonEmptyText(maxLength=255),
   )(BusinessCreate.apply)(BusinessCreate.unapply))
