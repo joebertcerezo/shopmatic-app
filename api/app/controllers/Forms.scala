@@ -33,7 +33,6 @@ object ProductForm {
     "name" -> nonEmptyText(maxLength=255),
     "description" -> nonEmptyText,
     "price" -> bigDecimal,
-    "stock" -> longNumber,
-    "isHidden" -> boolean
+    "stock" -> longNumber
   )(ProductCreate.apply)(ProductCreate.unapply))
 }

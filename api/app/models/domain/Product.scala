@@ -5,13 +5,13 @@ import play.api.libs.json._
 import java.util.UUID
 
 case class Product(
-  id: UUID,
   idBusiness: UUID,
   name: String,
   description: String,
   price: BigDecimal,
   stock: Long,
-  isHidden: Boolean
+  id: UUID = UUID.randomUUID(),
+  isHidden: Boolean = false
 )
 
 object Product {
@@ -24,16 +24,12 @@ case class ProductCreate(
   description: String,
   price: BigDecimal,
   stock: Long,
-  isHidden: Boolean
 ) {
-  def toDomain() = Product(UUID.randomUUID(), idBusiness, name, description, price, stock, isHidden)
+  def toDomain() = Product(idBusiness, name, description, price, stock)
 }
 
 object ProductCreate {
   def unapply(p: ProductCreate):
-    Option[(UUID, String, String, BigDecimal, Long, Boolean)] =
-      Some((p.idBusiness, p.name, p.description, p.price, p.stock, p.isHidden))
-
-  given Writes[ProductCreate] = Json.writes[ProductCreate]
-  given Reads[ProductCreate] = Json.reads[ProductCreate]
+    Option[(UUID, String, String, BigDecimal, Long)] =
+      Some((p.idBusiness, p.name, p.description, p.price, p.stock))
 }
