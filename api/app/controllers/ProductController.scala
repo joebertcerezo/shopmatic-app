@@ -23,7 +23,7 @@ class ProductController @Inject()
   
 
   def add(id: UUID) = Action.async(parse.json) { implicit request =>
-    productForm.bindFromRequest().fold(
+    createProduct.bindFromRequest().fold(
       error => Future.successful(BadRequest(error.errors.map(_.message).mkString(", "))),
       data => productService.add(data, id).value.map {
         case Left(msg) => BadRequest(msg)

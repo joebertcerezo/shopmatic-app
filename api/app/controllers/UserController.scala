@@ -8,19 +8,17 @@ import play.api.mvc._
 import play.api.libs.json._
 import play.api.i18n.I18nSupport
 import scala.concurrent.{ Future, ExecutionContext }
+import forms._
 
 @Singleton
 class UserController @Inject()
 (
   val controllerComponents: ControllerComponents,
   userService: UserService,
-  val secureAction: SecureAction
 ) (using ExecutionContext) extends BaseController with I18nSupport {
 
-  import forms.UserForms._
-
   def register(sso: Boolean) = Action.async { implicit request =>
-    registrationForm.bindFromRequest().fold (
+    UserForm.register.bindFromRequest().fold (
       error => Future.successful(BadRequest(error.errorsAsJson)),
       data => userService.add(data).value.map {
         case Left(msg) => BadRequest(toMessage(msg))
@@ -30,7 +28,7 @@ class UserController @Inject()
   }
 
   def login(sso: Boolean) = Action.async { implicit request =>
-    loginForm.bindFromRequest().fold (
+    UserForm.login.bindFromRequest().fold (
       error => Future.successful(BadRequest(error.errorsAsJson)),
       data => userService.auth(data).value.map {
         case Left(msg) => Unauthorized(toMessage(msg))
