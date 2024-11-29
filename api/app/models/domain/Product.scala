@@ -33,4 +33,7 @@ object ProductCreate {
   def unapply(p: ProductCreate):
     Option[(UUID, String, String, BigDecimal, Long, Boolean)] =
       Some((p.idBusiness, p.name, p.description, p.price, p.stock, p.isHidden))
+
+  given Writes[ProductCreate] = Json.writes[ProductCreate]
+  given Reads[ProductCreate] = Json.reads[ProductCreate]
 }

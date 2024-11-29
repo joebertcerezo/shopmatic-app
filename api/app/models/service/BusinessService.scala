@@ -31,9 +31,9 @@ class UserService @Inject()
     If user exists, get all businesses of that user.
     Otherwise, return a bad request message.
   */
-  def get(email: String): EitherT[Future, String, Seq[Business]] = for {
+  def get(owner: UUID, email: String): EitherT[Future, String, Seq[Business]] = for {
       _ <- OptionT(userRepo.show(email)).toRight("User doesn't exist.")
-      result <- EitherT.liftF(businessRepo.get(email))
+      result <- EitherT.liftF(businessRepo.get(owner))
     } yield result
 
 }

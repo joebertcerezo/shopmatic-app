@@ -1,6 +1,7 @@
 package repo.business
 
 import domain.business._
+import repo.user._
 import java.util.UUID
 import javax.inject._
 import slick.jdbc.PostgresProfile
@@ -9,7 +10,7 @@ import scala.concurrent.{ Future, ExecutionContext }
 
 @Singleton
 class BusinessRepo @Inject()
-(dbcp: DatabaseConfigProvider)
+(dbcp: DatabaseConfigProvider, val userRepo: UserRepo)
 (using ExecutionContext) {
 
   val dbConfig = dbcp.get[PostgresProfile]
@@ -18,8 +19,9 @@ class BusinessRepo @Inject()
 
   final class BusinessTable(t: Tag) extends Table[Business](t, "BUSINESS") {
     def id = column[UUID]("ID", O.PrimaryKey)
-    def owner = column[String]("OWNER")
+    def owner = column[UUID]("OWNER")
     def name = column[String]("NAME", O.Length(255))
+    def ownewrFK = foreignKey("OWNER_FK", owner, userRepo.users)(_.id, onDelete = ForeignKeyAction.Cascade)
     def * = (owner, name, id).mapTo[Business]
   }
 
@@ -29,13 +31,13 @@ class BusinessRepo @Inject()
       businesses returning businesses += business
     }
 
-  def get(email: String): Future[Seq[Business]] = db.run {
-      businesses.filter(_.owner === email).result
+  def get(owner: UUID): Future[Seq[Business]] = db.run {
+      businesses.filter(_.owner === owner).result
     }
 
-  def find(email: String, name: String): Future[Option[Business]] = db.run {
+  def find(owner: UUID, name: String): Future[Option[Business]] = db.run {
       businesses
-        .filter(b => b.owner === email && b.name === name)
+        .filter(b => b.owner === owner && b.name === name)
         .result
         .headOption
     }

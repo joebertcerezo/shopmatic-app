@@ -25,7 +25,7 @@ object BusinessForms {
   import domain.business.{BusinessCreate}
 
   val businessForm: Form[BusinessCreate] = Form(mapping(
-    "owner" -> email,
+    "owner" -> uuid,
     "name" -> nonEmptyText(maxLength=255),
   )(BusinessCreate.apply)(BusinessCreate.unapply))
 }
