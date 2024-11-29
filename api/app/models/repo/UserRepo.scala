@@ -17,11 +17,12 @@ class UserRepo @Inject()
   import profile.api._
 
   final class UserTable(t: Tag) extends Table[User](t, "USER") {
+    def id = column[UUID]("ID", O.PrimaryKey)
     def email = column[String]("EMAIL", O.Length(50), O.PrimaryKey)
     def name = column[String]("NAME", O.Length(255))
     def password = column[String]("PASSWORD", O.Length(50))
     def kind = column[String]("KIND", O.Length(15))
-    def * = (email, name, password, kind).mapTo[User]
+    def * = (email, name, password, kind, id).mapTo[User]
   }
 
   lazy val users = TableQuery[UserTable]

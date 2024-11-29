@@ -18,9 +18,9 @@ class UserService @Inject()
     If username exists, don't add.
     Otherwise, proceed adding the user.
   */
-  def add(user: User): EitherT[Future, String, String] = for {
+  def add(user: UserCreate): EitherT[Future, String, String] = for {
       _ <- OptionT(userRepo.show(user.email)).toLeft(()).leftMap(_ => "Email already registered.")
-      result <- EitherT.liftF(userRepo.add(user)).map(_ => "Registered successfully.")
+      result <- EitherT.liftF(userRepo.add(user.toDomain())).map(_ => "Registered successfully.")
     } yield result
 
   /*
