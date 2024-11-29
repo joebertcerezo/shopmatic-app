@@ -10,7 +10,7 @@ import slick.jdbc.JdbcProfile
 import scala.concurrent.{Future, ExecutionContext}
 
 @Singleton
-class ProductRepository @Inject()(
+class ProductRepo @Inject()(
   dbConfigProvider: DatabaseConfigProvider, 
   val business: BusinessRepo
 )(implicit ec: ExecutionContext) {
