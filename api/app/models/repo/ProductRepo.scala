@@ -34,7 +34,7 @@ class ProductRepo @Inject()(
     )(_.id, onDelete = ForeignKeyAction.Cascade)
 
     def * = (
-      id, idBusiness, name, description, price, stock, isHidden
+      idBusiness, name, description, price, stock, id, isHidden
     ).mapTo[Product]
   }
 

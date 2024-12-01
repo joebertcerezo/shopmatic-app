@@ -6,6 +6,7 @@ import play.api.mvc._
 import play.api.libs.json._
 import play.api.i18n.I18nSupport
 import scala.concurrent.{ Future, ExecutionContext }
+import forms._
 
 import service.business._
 import forms._
@@ -16,9 +17,8 @@ class BusinessController @Inject()
   val controllerComponents: ControllerComponents, val businessService: BusinessService
 ) (using ExecutionContext) extends BaseController with I18nSupport {
 
-
   def add() = Action.async { implicit request =>
-    BusinessForm.businessCreate.bindFromRequest().fold (
+    BusinessForm.createBusiness.bindFromRequest().fold (
       error => Future.successful(BadRequest(error.errorsAsJson)),
       data => businessService.add(data).value.map {
         case Left(msg) => BadRequest(msg)
