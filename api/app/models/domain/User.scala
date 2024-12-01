@@ -1,7 +1,7 @@
 package domain.user
 
-import java.util.UUID
 import play.api.libs.json._
+import java.util.UUID
 
 case class User (
   email: String,
@@ -10,10 +10,6 @@ case class User (
   kind: String,
   id: UUID = UUID.randomUUID()
 )
-
-object User {
-  given Writes[User] = Json.writes[User]
-}
 
 case class UserCreate (
   email: String,

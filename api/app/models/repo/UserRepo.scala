@@ -18,7 +18,7 @@ class UserRepo @Inject()
 
   final class UserTable(t: Tag) extends Table[User](t, "USER") {
     def id = column[UUID]("ID", O.PrimaryKey)
-    def email = column[String]("EMAIL", O.Length(50))
+    def email = column[String]("EMAIL", O.Length(50), O.PrimaryKey)
     def name = column[String]("NAME", O.Length(255))
     def password = column[String]("PASSWORD", O.Length(50))
     def kind = column[String]("KIND", O.Length(15))
